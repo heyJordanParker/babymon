@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/jedybg/babymon/issues"
   },
-  "homepage": "https://github.com/jedybg/babymon#readme"
+  "homepage": "https://github.com/jedybg/babymon#readme",
+  "dependencies": {
+    "node-watch": "0.4.0"
+  }
 }
