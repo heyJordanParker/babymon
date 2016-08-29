@@ -1,0 +1,26 @@
+{
+  "name": "babymon-web",
+  "version": "1.0.0",
+  "description": "Baby Monitor",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jedybg/babymon.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "Jodan Georgiev <jordang@uber.com>",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/jedybg/babymon/issues"
+  },
+  "homepage": "https://github.com/jedybg/babymon#readme"
+}
