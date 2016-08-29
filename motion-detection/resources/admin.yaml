@@ -1,0 +1,8 @@
+extend: base.yaml
+
+identifier: admin
+host: 0.0.0.0
+port: 80
+password: uber
+running: false
+snapshot: /tmp/camera.bmp

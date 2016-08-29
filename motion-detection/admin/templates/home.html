@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <fieldset style='width: 150px; text-align: center;'>
+        <legend>Baby monitor</legend>
+        <p>Is enabled: {{ state['active'] }}</p>
+        {% if state['active'] %}
+            <p>Motion: {{ config['camera_state']['motion'] }}</p>
+            <form action="/disarm">
+                <input type="submit" value="Deactivate" style="width: 120px;">
+            </form>
+        {% else %}
+            <form action="/arm">
+                <input type="submit" value="Activate" style="width: 120px;">
+            </form>
+        {% endif %}
+        <form action="/view">
+            <input type="submit" value="Snapshot" style="width: 120px;">
+        </form>
+    </fieldset>
+    <br>
+
+    <br>
+    <fieldset style='width: 150px;text-align: center'>
+        <legend>Logout</legend>
+        <form action="/logout">
+            <input type="submit" value="Logout" style="width: 120px;">
+        </form>
+    </fieldset>
+{% endblock %}

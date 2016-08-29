@@ -1,0 +1,9 @@
+extend: base.yaml
+
+identifier: camera
+motion:
+    mask: resources/camera_mask.png
+    snapshot: /tmp/camera.bmp
+    interval: 1
+    camera_retry_count: 3
+

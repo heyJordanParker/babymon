@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% if state and state['active'] %}
+            <meta http-equiv="refresh" content="1">
+        {% endif %}
+    </head>
+    <body>
+        <div align="center">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

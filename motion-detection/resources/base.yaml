@@ -1,0 +1,13 @@
+camera_state_file: /tmp/camera_state.txt
+mic_state_File: /tmp/mic_state.txt
+email:
+    to: funnybrum@gmail.com
+    from: uberbabymon@gmail.com
+smtp:
+    server: smtp.gmail.com
+    port: 587
+    user: uberbabymon
+    password: ubermon!23
+    sender: Uber Baby Monitor
+    recipient: uberbabymon@gmail.com
+tmp_folder: /tmp
