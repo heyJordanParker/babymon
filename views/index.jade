@@ -3,3 +3,12 @@ extends layout
 block content
     h1= title
     p Welcome to #{title}
+    canvas(id="videoCanvas" width="640" height="480")
+      p Please use a browser that supports the Canvas Element, like
+
+script(src="jsmpg.js")
+script.
+  // Setup the WebSocket connection and start the player
+  var client = new WebSocket( 'ws://babymon.com:8084/' );
+  var canvas = document.getElementById('videoCanvas');
+  var player = new jsmpeg(client, {canvas:canvas});
