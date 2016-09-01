@@ -1,37 +1,40 @@
-var app = require('express');
-Stream = require('node-rtsp-stream');
-
-var router = app.Router();
-
-var STREAM_PORT = 8554;
-var WEBSOCKET_PORT = 8084;
-var STREAM_MAGIC_BYTES = 'jsmp';
-
-var width = 320,
-	height = 240;
-  
-// HTTP Server to accept incomming MPEG Stream
-var streamServer = require('http').createServer( function(request, response) {
-	var params = request.url.substr(1).split('/');
-
-	response.connection.setTimeout(0);
-
-	width = (params[1] || 320)|0;
-	height = (params[2] || 240)|0;
-
-	console.log(
-		'Stream Connected: ' + request.socket.remoteAddress +
-		':' + request.socket.remotePort + ' size: ' + width + 'x' + height
-	);
-	request.on('data', function(data){
-		socketServer.broadcast(data, {binary:true});
-	});
-}).listen(STREAM_PORT);
-
+var express = require('express');
+var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
     res.render('index', { title: 'Babymon' });
+});
+
+/* POST to Add User Service */
+router.post('/adduser', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Get our form values. These rely on the "name" attributes
+    var userName = req.body.username;
+    var userEmail = req.body.useremail;
+
+    // Set our collection
+    var collection = db.get('usercollection');
+
+    // Submit to the DB
+    collection.insert({
+        "username" : userName,
+        "email" : userEmail
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // If it worked, set the header so the address bar doesn't still say /adduser
+            //res.location("userlist");
+            // And forward to success page
+            res.redirect("userlist");
+        }
+    });
 });
 
 module.exports = router;
