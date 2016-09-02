@@ -1,14 +1,28 @@
 extends layout
 
 block content
+    - var title = "Babymon"
+    
     h1= title
     p Welcome to #{title}
-    canvas(id="videoCanvas" width="640" height="480")
-      p Please use a browser that supports the Canvas Element, like
-
-script(src="jsmpg.js")
-script.
-  // Setup the WebSocket connection and start the player
-  var client = new WebSocket( 'ws://babymon.com:8084/' );
-  var canvas = document.getElementById('videoCanvas');
-  var player = new jsmpeg(client, {canvas:canvas});
+    div
+      h2 Motion Triggered
+      p(id="videoData") false
+      h2 Audio Triggered
+      p(id="audioData") false
+      
+      script(src="http://code.jquery.com/jquery-1.11.1.js")
+      script(src="http://localhost:3000/socket.io/socket.io.js")
+      script.
+        console.log('Initializing socket.io')
+        var socket = io();
+        socket.connect('http://localhost:3000', { autoConnect: true}); 
+        
+        socket.on('camera_update', function(data){
+          console.log('updating camera')
+          $('#videoData').text(data.has_motion);
+        });
+        socket.on('audio_update', function(data){
+          console.log('updating audio')
+          $('#audioData').text(data.has_motion);
+        });

@@ -1,0 +1,22 @@
+state_files:
+  directory: ./examples/ # /tmp/
+  camera_file: camera_state.txt
+  mic_file: mic_state.txt
+
+sensor:
+  audio:
+    threshold: 7 # needed seconds of movement to tirgger audio detection
+    sample_size: 10 # sample of seconds for a check for audio detection
+  camera:
+    threshold: 13 # needed seconds of movement to tirgger video detection
+    sample_size: 15 # sample of seconds for a check for video detection
+
+email: # update this
+  from: uberbabymon@gmail.com
+  smtp:
+      server: smtp.gmail.com
+      port: 587
+      user: uberbabymon
+      password: ubermon!23
+      sender: Uber Baby Monitor
+      recipient: uberbabymon@gmail.com
