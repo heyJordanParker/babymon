@@ -18,23 +18,31 @@ block content
         console.log('Initializing socket.io')
         var socket = io();
         socket.connect('http://localhost:3000', { autoConnect: true}); 
+        var notification = null;
         
         function showNotification(image, title, content) {
           var options = {
               body: content,
-              icon: image
+              icon: image,
+              renotify: false,
           }
           if(!("Notification" in window)) {
             alert("This browser does not support desktop notification");
             return;
           } else if(Notification.permission === "granted") {
             // If it's okay let's create a notification
-            var notification = new Notification(title, options);
+            if(notification != null) {
+              notification.close();
+            }
+            notification = new Notification(title, options);
           } else {
             Notification.requestPermission(function (permission) {
               // If the user accepts, let's create a notification
               if (permission === "granted") {
-                var notification = new Notification(title, options);
+                if(notification != null) {
+                  notification.close();
+                }
+                notification = new Notification(title, options);
               }
             });
           }
