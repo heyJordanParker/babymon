@@ -16,6 +16,7 @@ var config = require('./lib/config')
 FILES_DIRECTORY = config.state_files.directory;
 CAMERA_FILE = config.state_files.camera_file;
 AUDIO_FILE = config.state_files.mic_file;
+IMAGE_FILE = config.state_files.image_file;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -85,6 +86,9 @@ watch(FILES_DIRECTORY, function(file_path) {
       } else if(file_name == AUDIO_FILE) {
         data = lib.parseAudioData(data);
         io.emit('audio_update', data);
+      } else if(file_name == IMAGE_FILE) {
+        fs.createReadStream(file_path).pipe(fs.createWriteStream('./public/camera.bmp'));
+        io.emit('image_update');
       } else {
         console.log("Invalid file " + file_path);
         return;

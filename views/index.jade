@@ -6,6 +6,7 @@ block content
     h1= title
     p Welcome to #{title}
     div
+      img(id="image" width="640" height="360" src='camera.bmp')
       h2 Motion Triggered
       p(id="videoData") false
       h2 Audio Triggered
@@ -52,4 +53,8 @@ block content
           if(data.has_motion) {
             showNotification('crying_baby.jpg', 'The baby is crying', 'Skynet system detected feeling of sadness of the small human.')
           }
+        });
+        socket.on('image_update', function(data){
+          console.log('updating image');
+          $('#image').attr("src", 'camera.bmp?' + new Date().getTime());
         });
