@@ -73,27 +73,31 @@ http.listen(3000, function(){
 
 watch(FILES_DIRECTORY, function(file_path) {
   try {
-    fs.readFile(file_path, 'utf8', function (err,data) {
-      if (err) {
-        return console.log(err);
-      }
+    file_name = path.basename(file_path);
 
-      file_name = path.basename(file_path);
-
-      if(file_name == CAMERA_FILE) {
+    if(file_name == CAMERA_FILE) {
+      fs.readFile(file_path, 'utf8', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
         data = lib.parseCameraData(data);
         io.emit('camera_update', data);
-      } else if(file_name == AUDIO_FILE) {
+      });
+
+    } else if(file_name == AUDIO_FILE) {
+      fs.readFile(file_path, 'utf8', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
         data = lib.parseAudioData(data);
         io.emit('audio_update', data);
-      } else if(file_name == IMAGE_FILE) {
-        fs.createReadStream(file_path).pipe(fs.createWriteStream('./public/camera.bmp'));
-        io.emit('image_update');
-      } else {
-        console.log("Invalid file " + file_path);
-        return;
-      }
-    });
+      });
+    } else if(file_name == IMAGE_FILE) {
+      fs.createReadStream(file_path).pipe(fs.createWriteStream('./public/camera.bmp'));
+      io.emit('image_update');
+    } else {
+      return;
+    }
   }
   catch(err) {
     console.log("Parsing Exception: " + err);
