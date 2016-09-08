@@ -1,5 +1,5 @@
 state_files:
-  directory: ./examples/ # /tmp/
+  directory: /tmp/
   camera_file: camera_state.txt
   mic_file: mic_state.txt
   image_file: camera.bmp
