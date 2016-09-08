@@ -17,6 +17,9 @@ FILES_DIRECTORY = config.state_files.directory;
 CAMERA_FILE = config.state_files.camera_file;
 AUDIO_FILE = config.state_files.mic_file;
 IMAGE_FILE = config.state_files.image_file;
+UPDATE_SPEED = config.sensor.update_speed;
+
+var last_update = Date.now();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -72,6 +75,10 @@ http.listen(3000, function(){
 // });
 
 watch(FILES_DIRECTORY, function(file_path) {
+  if(Date.now() <= last_update + UPDATE_SPEED) {
+    return;
+  }
+  last_update = Date.now();
   try {
     file_name = path.basename(file_path);
 

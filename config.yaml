@@ -5,6 +5,7 @@ state_files:
   image_file: camera.bmp
 
 sensor:
+  update_speed: 5000 # 5 * 1000 or 5 seconds
   audio:
     threshold: 7 # needed seconds of movement to tirgger audio detection
     sample_size: 10 # sample of seconds for a check for audio detection
