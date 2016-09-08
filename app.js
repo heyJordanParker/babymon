@@ -84,6 +84,9 @@ watch(FILES_DIRECTORY, function(file_path) {
           return console.log(err);
         }
         data = lib.parseCameraData(data);
+        if(data == -1) {
+          return;
+        }
         io.emit('camera_update', data);
       });
 
@@ -93,6 +96,9 @@ watch(FILES_DIRECTORY, function(file_path) {
           return console.log(err);
         }
         data = lib.parseAudioData(data);
+        if(data == -1) {
+          return;
+        }
         io.emit('audio_update', data);
       });
     } else if(file_name == IMAGE_FILE) {
