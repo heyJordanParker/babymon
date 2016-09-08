@@ -18,11 +18,38 @@ block content
         var socket = io();
         socket.connect('http://localhost:3000', { autoConnect: true}); 
         
+        function showNotification(image, title, content) {
+          var options = {
+              body: content,
+              icon: image
+          }
+          if(!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
+            return;
+          } else if(Notification.permission === "granted") {
+            // If it's okay let's create a notification
+            var notification = new Notification(title, options);
+          } else {
+            Notification.requestPermission(function (permission) {
+              // If the user accepts, let's create a notification
+              if (permission === "granted") {
+                var notification = new Notification(title, options);
+              }
+            });
+          }
+        }
+        
         socket.on('camera_update', function(data){
           console.log('updating camera')
           $('#videoData').text(data.has_motion);
+          if(data.has_motion) {
+            showNotification('moving_baby.jpg', 'The baby is moving', 'Skynet system detected movement of the small human.')
+          }
         });
         socket.on('audio_update', function(data){
           console.log('updating audio')
           $('#audioData').text(data.has_motion);
+          if(data.has_motion) {
+            showNotification('crying_baby.jpg', 'The baby is crying', 'Skynet system detected feeling of sadness of the small human.')
+          }
         });
