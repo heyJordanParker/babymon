@@ -75,11 +75,6 @@ http.listen(3000, function(){
 // });
 
 watch(FILES_DIRECTORY, function(file_path) {
-  var date = new Date().getTime()
-  if(date <= next_update) {
-    return;
-  }
-  next_update = new Date(date + UPDATE_SPEED).getTime();
   try {
     file_name = path.basename(file_path);
 
@@ -101,6 +96,13 @@ watch(FILES_DIRECTORY, function(file_path) {
         io.emit('audio_update', data);
       });
     } else if(file_name == IMAGE_FILE) {
+      var date = new Date().getTime()
+      if(date <= next_update) {
+        return;
+      }
+      var updateTime = new Date(date + UPDATE_SPEED);
+      next_update = updateTime.getTime();
+
       fs.createReadStream(file_path).pipe(fs.createWriteStream('./public/camera.bmp'));
       io.emit('image_update');
     } else {
