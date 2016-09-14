@@ -10,7 +10,7 @@ block content
       h2 Motion Triggered
       p(id="videoData") false
       h2 Audio Triggered
-      p(id="audioData") false
+      p(id="audioData") falseatom
       
       script(src="http://code.jquery.com/jquery-1.11.1.js")
       script(src="https://cdn.socket.io/socket.io-1.0.0.js")
@@ -18,31 +18,32 @@ block content
         console.log('Initializing socket.io')
         var socket = io();
         socket.connect('http://localhost:3000', { autoConnect: true}); 
-        var notification = null;
+        var notifications = {};
         
         function showNotification(image, title, content) {
           var options = {
               body: content,
               icon: image,
               renotify: false,
+              sound: 'notification.mp3'
           }
           if(!("Notification" in window)) {
             alert("This browser does not support desktop notification");
             return;
           } else if(Notification.permission === "granted") {
             // If it's okay let's create a notification
-            if(notification != null) {
-              notification.close();
+            if(notifications[title] != null) {
+              return;
             }
-            notification = new Notification(title, options);
+            notifications[title] = new Notification(title, options);
           } else {
             Notification.requestPermission(function (permission) {
               // If the user accepts, let's create a notification
               if (permission === "granted") {
-                if(notification != null) {
-                  notification.close();
+                if(notifications[title] != null) {
+                  return;
                 }
-                notification = new Notification(title, options);
+                notifications[title] = new Notification(title, options);
               }
             });
           }
