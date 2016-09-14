@@ -5,6 +5,7 @@ block content
     
     h1= title
     p Welcome to #{title}
+    audio(id="audio" src='notification.mp3' preload="auto")
     div
       img(id="image" width="640" height="360" src='camera.bmp')
       h2 Motion Triggered
@@ -24,8 +25,7 @@ block content
           var options = {
               body: content,
               icon: image,
-              renotify: false,
-              sound: 'notification.mp3'
+              renotify: false
           }
           if(!("Notification" in window)) {
             alert("This browser does not support desktop notification");
@@ -36,6 +36,7 @@ block content
               return;
             }
             notifications[title] = new Notification(title, options);
+            document.getElementById('audio').play();
             notifications[title].onclose = function() { notifications[title] = null; }
           } else {
             Notification.requestPermission(function (permission) {
@@ -45,6 +46,7 @@ block content
                   return;
                 }
                 notifications[title] = new Notification(title, options);
+                document.getElementById('audio').play();
                 notifications[title].onclose = function() { notifications[title] = null; }
               }
             });
